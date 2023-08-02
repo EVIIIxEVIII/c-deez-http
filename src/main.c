@@ -8,7 +8,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
-#include "http/http-server.h"
+#include "http/base/http-server.h"
 
 char* build_response(const char* http_header, const char* http_body) {
     size_t http_header_length = strlen(http_header);
