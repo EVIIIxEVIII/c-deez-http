@@ -8,6 +8,8 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
+#include "http/http-server.h"
+
 char* build_response(const char* http_header, const char* http_body) {
     size_t http_header_length = strlen(http_header);
     size_t http_body_length = strlen(http_body);
@@ -22,14 +24,13 @@ char* build_response(const char* http_header, const char* http_body) {
     strcpy(http_response, http_header);
     strcat(http_response, http_body);
 
-    printf("%s", http_response);
     return http_response;
 }
 
 void add_cool(int client_socket, const char* http_response) {
     size_t http_response_size = strlen(http_response);
 
-    char cool[] = "cool";
+    char cool[] = "hello world 15";
     size_t cool_size = sizeof(cool);
 
     char* new_http_response = (char*)malloc(http_response_size + cool_size + 1);
@@ -44,7 +45,7 @@ void add_cool(int client_socket, const char* http_response) {
 }
 
 int main() {
-    const char http_body[] = "hello world";
+    const char http_body[] = "hello world does it? ";
     size_t http_header_length = strlen("HTTP/1.1 200 OK\r\n\n");
 
     char* http_header = (char *)malloc(http_header_length + 1); // Add 1 for the null terminator
@@ -58,25 +59,14 @@ int main() {
 
     char* http_response = build_response(http_header, http_body);
 
-    int server_socket;
-    server_socket = socket(AF_INET, SOCK_STREAM, 0);
+    free(http_header);
 
-    struct sockaddr_in server_address;
+    http_server* hs = http_server_create(9002);
 
-    server_address.sin_port = htons(9002);
-    server_address.sin_family = AF_INET;
-    server_address.sin_addr.s_addr = INADDR_ANY;
-
-
-    int bind_socket_status = bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address));
-    if (bind_socket_status == -1) {
-        perror("bind");
-        return 1;
-    }
-
-    listen(server_socket, 5);
+    http_server_start(hs);
 
     int client_socket;
+    int server_socket = http_server_get_server_socket(hs);
 
     while(1) {
         client_socket = accept(server_socket, NULL, NULL);
@@ -84,6 +74,7 @@ int main() {
         close(client_socket);
     }
 
+    http_server_destroy(hs);
     return 0;
 }
 
