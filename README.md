@@ -16,4 +16,4 @@ Follow these steps to compile and run the program:
 
 4. Run the followind command to start the server:
    ```bash
-       ./run
+   ./run
