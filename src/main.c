@@ -45,6 +45,7 @@ void add_cool(int client_socket, const char* http_response) {
 }
 
 int main() {
+    const int PORT = 9002;
     const char http_body[] = "hello world does it? ";
     size_t http_header_length = strlen("HTTP/1.1 200 OK\r\n\n");
 
@@ -61,13 +62,14 @@ int main() {
 
     free(http_header);
 
-    http_server* hs = http_server_create(9002);
+    http_server* hs = http_server_create(PORT);
 
     http_server_start(hs);
 
     int client_socket;
     int server_socket = http_server_get_server_socket(hs);
 
+    printf("Server running on port: %i", PORT);
     while(1) {
         client_socket = accept(server_socket, NULL, NULL);
         add_cool(client_socket, http_response);
