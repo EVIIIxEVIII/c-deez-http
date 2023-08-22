@@ -27,10 +27,10 @@ char* build_response(const char* http_header, const char* http_body) {
     return http_response;
 }
 
-void add_cool(int client_socket, const char* http_response) {
+void add_test(int client_socket, const char* http_response) {
     size_t http_response_size = strlen(http_response);
 
-    char cool[] = "hello world 15";
+    char cool[] = "test";
     size_t cool_size = sizeof(cool);
 
     char* new_http_response = (char*)malloc(http_response_size + cool_size + 1);
@@ -72,7 +72,7 @@ int main() {
     printf("Server running on port: %i", PORT);
     while(1) {
         client_socket = accept(server_socket, NULL, NULL);
-        add_cool(client_socket, http_response);
+        add_test(client_socket, http_response);
         close(client_socket);
     }
 
