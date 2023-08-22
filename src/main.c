@@ -30,7 +30,7 @@ char* build_response(const char* http_header, const char* http_body) {
 void add_test(int client_socket, const char* http_response) {
     size_t http_response_size = strlen(http_response);
 
-    char cool[] = "test";
+    char cool[] = "test1";
     size_t cool_size = sizeof(cool);
 
     char* new_http_response = (char*)malloc(http_response_size + cool_size + 1);
