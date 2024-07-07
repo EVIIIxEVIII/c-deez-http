@@ -17,3 +17,5 @@ Follow these steps to compile and run the program:
 4. Run the followind command to start the server:
    ```bash
    ./run
+
+DOES NOT SUPPORT CONCURRENT REQUESTS BECAUSE IT IS DOES NOT RUN THEM IN PARALLEL 
